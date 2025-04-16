@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import * as Joi from 'joi'
+import { GraphQLModule } from '@nestjs/graphql'
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 
 @Module({
   imports: [
@@ -29,6 +31,11 @@ import * as Joi from 'joi'
         synchronize: true,
         autoLoadEntities: true,
       }),
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      graphiql: true, // dev
+      autoSchemaFile: true,
     }),
   ],
   controllers: [],

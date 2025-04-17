@@ -1,9 +1,11 @@
-import { Module } from '@nestjs/common'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import * as Joi from 'joi'
-import { GraphQLModule } from '@nestjs/graphql'
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import * as Joi from 'joi';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ProjectModule } from './project/project.module';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
   imports: [
@@ -32,11 +34,13 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
         autoLoadEntities: true,
       }),
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      graphiql: true, // dev
-      autoSchemaFile: true,
-    }),
+    // GraphQLModule.forRoot<ApolloDriverConfig>({
+    //   driver: ApolloDriver,
+    //   graphiql: true, // dev
+    //   autoSchemaFile: true,
+    // }),
+    CqrsModule.forRoot(),
+    ProjectModule,
   ],
   controllers: [],
   providers: [],

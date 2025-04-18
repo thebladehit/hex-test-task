@@ -23,21 +23,46 @@ export class ProjectRepositoryImpl implements ProjectRepository {
     ormEntity.data = project.data!;
 
     const saved = await this.projectRepository.save(ormEntity);
-    return new Project(
-      saved.id,
-      saved.name,
-      saved.rawData as ProjectRawData,
-      saved.data as ProjectData,
-      saved.createdAt,
-      saved.createdAt,
-    );
+    return this.fromEntity(saved);
   }
 
-  updateName(id: string, name: string): Promise<Project> {
-    return Promise.resolve(new Project(id, name, {} as ProjectRawData, {} as ProjectData, null, null)); /// stub
+  async updateName(project: Project): Promise<Project> {
+    const ormEntity = this.toEntity(project);
+    const updated = await this.projectRepository.save(ormEntity);
+    return this.fromEntity(updated);
   }
 
   updateRawData(id: string, rawData: ProjectRawData): Promise<Project> {
     return Promise.resolve(new Project(id, 'ff', {} as ProjectRawData, {} as ProjectData, null, null)); /// stub
+  }
+
+  async findById(id: string): Promise<Project | null> {
+    const ormEntity = await this.projectRepository.findOne({
+      where: { id },
+    });
+    if (!ormEntity) {
+      return null;
+    }
+    return this.fromEntity(ormEntity);
+  }
+
+  private fromEntity(ormProject: ProjectTypeOrmEntity): Project {
+    return new Project(
+      ormProject.id,
+      ormProject.name,
+      ormProject.rawData as ProjectRawData,
+      ormProject.data as ProjectData,
+      ormProject.createdAt,
+      ormProject.updatedAt,
+    );
+  }
+
+  private toEntity(project: Project): ProjectTypeOrmEntity {
+    const ormEntity = new ProjectTypeOrmEntity();
+    ormEntity.id = project.id!;
+    ormEntity.name = project.name;
+    ormEntity.rawData = project.rawData!;
+    ormEntity.data = project.data!;
+    return ormEntity;
   }
 }

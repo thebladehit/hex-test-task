@@ -11,7 +11,7 @@ export class UpdateProjectNameHandler implements ICommandHandler<UpdateProjectNa
 
   async execute({ id, name }: UpdateProjectNameCommand): Promise<Project> {
     try {
-      return this.projectService.updateName(id, name);
+      return await this.projectService.updateName(id, name);
     } catch (err) {
       if (err instanceof ProjectNotFoundException) {
         throw new NotFoundException(err.message);

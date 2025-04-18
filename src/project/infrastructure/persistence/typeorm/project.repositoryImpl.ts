@@ -26,14 +26,10 @@ export class ProjectRepositoryImpl implements ProjectRepository {
     return this.fromEntity(saved);
   }
 
-  async updateName(project: Project): Promise<Project> {
+  async update(project: Project): Promise<Project> {
     const ormEntity = this.toEntity(project);
     const updated = await this.projectRepository.save(ormEntity);
     return this.fromEntity(updated);
-  }
-
-  updateRawData(id: string, rawData: ProjectRawData): Promise<Project> {
-    return Promise.resolve(new Project(id, 'ff', {} as ProjectRawData, {} as ProjectData, null, null)); /// stub
   }
 
   async findById(id: string): Promise<Project | null> {

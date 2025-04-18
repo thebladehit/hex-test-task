@@ -21,7 +21,17 @@ export class ProjectService {
       throw new ProjectNotFoundException(id);
     }
     project.name = name;
-    return this.projectRepository.updateName(project);
+    return this.projectRepository.update(project);
+  }
+
+  async updateRawData(id: string, rawData: ProjectRawData): Promise<Project> {
+    const project = await this.projectRepository.findById(id);
+    if (!project) {
+      throw new ProjectNotFoundException(id);
+    }
+    project.rawData = rawData;
+    project.data = this.process(rawData);
+    return this.projectRepository.update(project);
   }
 
   private process({ target, inputs }: ProjectRawData): ProjectData {

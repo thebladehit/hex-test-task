@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ProjectController } from './project.controller';
-import { CreateProjectHandler } from './cqrs/handlers/create-project.handler';
-import { UpdateProjectHandler } from './cqrs/handlers/update-project.handler';
+import { ProjectController } from './infrastructure/rest/project.controller';
+import { CreateProjectHandler } from './application/cqrs/handlers/create-project.handler';
+import { UpdateProjectHandler } from './application/cqrs/handlers/update-project.handler';
 
 @Module({
   controllers: [ProjectController],

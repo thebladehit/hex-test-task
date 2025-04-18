@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ProjectModule } from './project/project.module';
 import { CqrsModule } from '@nestjs/cqrs';
+import { Project } from './project/infrastructure/persistence/typeorm/project.entities';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { CqrsModule } from '@nestjs/cqrs';
         username: configService.get('DB_USER'),
         password: configService.get('DB_PASS'),
         database: configService.get('DB_NAME'),
-        entities: [],
+        entities: [Project],
         synchronize: true,
         autoLoadEntities: true,
       }),

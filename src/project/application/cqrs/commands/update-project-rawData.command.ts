@@ -1,9 +1,8 @@
 import { ProjectRawData } from '../../../domain/models/project-raw-data';
 
-export class CreateProjectCommand {
+export class UpdateProjectRawDataCommand {
   constructor(
-    public readonly name: string,
+    public readonly id: string,
     public readonly rawData: ProjectRawData,
-  ) {
-  }
+  ) {}
 }

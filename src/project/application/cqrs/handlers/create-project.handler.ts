@@ -1,13 +1,13 @@
 import { CreateProjectCommand } from '../commands/create-project.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { ProjectService } from '../../../domain/services/project.service';
+import { Project } from '../../../domain/models/project';
 
 @CommandHandler(CreateProjectCommand)
 export class CreateProjectHandler implements ICommandHandler<CreateProjectCommand> {
-  constructor() {
-  }
+  constructor(private readonly projectService: ProjectService) {}
 
-  async execute(command: CreateProjectCommand): Promise<void> {
-    const { name, rawData } = command;
-    console.log('create', name);
+  execute({ name, rawData }: CreateProjectCommand): Promise<Project> {
+    return this.projectService.create(name, rawData);
   }
 }

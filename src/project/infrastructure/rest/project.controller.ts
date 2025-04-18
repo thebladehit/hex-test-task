@@ -1,9 +1,11 @@
-import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateProjectCommand } from '../../application/cqrs/commands/create-project.command';
 import { UpdateProjectNameCommand } from '../../application/cqrs/commands/update-project-name.command';
 import { UpdateProjectRawDataCommand } from '../../application/cqrs/commands/update-project-rawData.command';
+import { UpdateProjectNameDto } from './dto/update-project-name.dto';
+import { UpdateProjectRawDataDto } from './dto/update-project-rawData.dto';
 
 @Controller('projects')
 export class ProjectController {
@@ -19,12 +21,12 @@ export class ProjectController {
   }
 
   @Patch('/:id/name')
-  updateProjectName(@Param('id') id: string, @Body() dto: Partial<CreateProjectDto>) {
+  updateProjectName(@Param('id', new ParseUUIDPipe()) id: string, @Body() dto: UpdateProjectNameDto) {
     return this.commandBus.execute(new UpdateProjectNameCommand(id, dto.name!));
   }
 
   @Patch('/:id/rawData')
-  updateProjectRawData(@Param('id') id: string, @Body() dto: Partial<CreateProjectDto>) {
+  updateProjectRawData(@Param('id', new ParseUUIDPipe()) id: string, @Body() dto: UpdateProjectRawDataDto) {
     return this.commandBus.execute(new UpdateProjectRawDataCommand(id, dto.rawData!));
   }
 }

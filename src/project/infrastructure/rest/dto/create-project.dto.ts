@@ -7,6 +7,7 @@ export class CreateProjectDto {
   @IsNotEmpty()
   name: string;
 
+  @IsObject()
   @ValidateNested()
   @Type(() => RawDataDto)
   rawData: RawDataDto;

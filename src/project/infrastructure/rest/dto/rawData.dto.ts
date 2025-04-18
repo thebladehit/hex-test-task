@@ -1,4 +1,4 @@
-import { ArrayNotEmpty, IsArray, IsNumber, Min } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsNotEmpty, IsNumber, Min } from 'class-validator';
 
 export class RawDataDto {
   @IsNumber()
@@ -6,6 +6,7 @@ export class RawDataDto {
   target: number;
 
   @IsArray()
+  @IsNotEmpty()
   @ArrayNotEmpty()
   @IsNumber({}, { each: true })
   @Min(1, { each: true })

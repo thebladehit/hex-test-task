@@ -1,9 +1,8 @@
-import { Body, Controller, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateProjectCommand } from './cqrs/commands/create-project.command';
-import { UpdateProjectCommand } from './cqrs/commands/update-project.command';
-import { UpdateProjectDto } from './dto/update-project.dto';
+import { CreateProjectCommand } from '../../application/cqrs/commands/create-project.command';
+import { UpdateProjectCommand } from '../../application/cqrs/commands/update-project.command';
 
 @Controller('projects')
 export class ProjectController {
@@ -19,7 +18,7 @@ export class ProjectController {
   }
 
   @Patch('/:id')
-  updateProject(@Body() dto: UpdateProjectDto) {
-    return this.commandBus.execute(new UpdateProjectCommand(dto.id, dto.name, dto.rawData));
+  updateProject(@Param('id') id: string, @Body() dto: Partial<CreateProjectDto>) {
+    return this.commandBus.execute(new UpdateProjectCommand(id, dto.name, dto.rawData));
   }
 }

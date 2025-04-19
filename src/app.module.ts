@@ -35,11 +35,11 @@ import { Project } from './project/infrastructure/persistence/typeorm/project.en
         autoLoadEntities: true,
       }),
     }),
-    // GraphQLModule.forRoot<ApolloDriverConfig>({
-    //   driver: ApolloDriver,
-    //   graphiql: true, // dev
-    //   autoSchemaFile: true,
-    // }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      graphiql: true, // dev
+      autoSchemaFile: true,
+    }),
     CqrsModule.forRoot(),
     ProjectModule,
   ],

@@ -1,9 +1,9 @@
 import { Body, Controller, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { CommandBus } from '@nestjs/cqrs';
-import { CreateProjectCommand } from '../cqrs/commands/create/create-project.command';
-import { UpdateProjectNameCommand } from '../cqrs/commands/update/update-project-name.command';
-import { UpdateProjectRawDataCommand } from '../cqrs/commands/update/update-project-rawData.command';
+import { CreateProjectCommand } from '../../application/cqrs/commands/create/create-project.command';
+import { UpdateProjectNameCommand } from '../../application/cqrs/commands/update/update-project-name.command';
+import { UpdateProjectRawDataCommand } from '../../application/cqrs/commands/update/update-project-rawData.command';
 import { UpdateProjectNameDto } from './dto/update-project-name.dto';
 import { UpdateProjectRawDataDto } from './dto/update-project-rawData.dto';
 

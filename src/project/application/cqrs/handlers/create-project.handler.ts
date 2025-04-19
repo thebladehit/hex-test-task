@@ -1,4 +1,4 @@
-import { CreateProjectCommand } from '../commands/create-project.command';
+import { CreateProjectCommand } from '../commands/create/create-project.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ProjectService } from '../../../domain/services/project.service';
 import { Project } from '../../../domain/models/project';

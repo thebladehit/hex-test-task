@@ -1,4 +1,4 @@
-import { UpdateProjectNameCommand } from '../commands/update-project-name.command';
+import { UpdateProjectNameCommand } from '../commands/update/update-project-name.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ProjectService } from '../../../domain/services/project.service';
 import { ProjectNotFoundException } from '../../../domain/errors/project-not-found.exception';

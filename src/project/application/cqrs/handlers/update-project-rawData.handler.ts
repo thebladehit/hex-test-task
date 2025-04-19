@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { UpdateProjectRawDataCommand } from '../commands/update-project-rawData.command';
+import { UpdateProjectRawDataCommand } from '../commands/update/update-project-rawData.command';
 import { Project } from '../../../domain/models/project';
 import { ProjectNotFoundException } from '../../../domain/errors/project-not-found.exception';
 import { NotFoundException } from '@nestjs/common';

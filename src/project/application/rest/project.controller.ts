@@ -1,9 +1,9 @@
 import { Body, Controller, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateProjectCommand } from '../../application/cqrs/commands/create-project.command';
-import { UpdateProjectNameCommand } from '../../application/cqrs/commands/update-project-name.command';
-import { UpdateProjectRawDataCommand } from '../../application/cqrs/commands/update-project-rawData.command';
+import { CommandBus } from '@nestjs/cqrs';
+import { CreateProjectCommand } from '../cqrs/commands/create-project.command';
+import { UpdateProjectNameCommand } from '../cqrs/commands/update-project-name.command';
+import { UpdateProjectRawDataCommand } from '../cqrs/commands/update-project-rawData.command';
 import { UpdateProjectNameDto } from './dto/update-project-name.dto';
 import { UpdateProjectRawDataDto } from './dto/update-project-rawData.dto';
 
@@ -11,9 +11,7 @@ import { UpdateProjectRawDataDto } from './dto/update-project-rawData.dto';
 export class ProjectController {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly queryBus: QueryBus,
-  ) {
-  }
+  ) {}
 
   @Post()
   createProject(@Body() dto: CreateProjectDto) {

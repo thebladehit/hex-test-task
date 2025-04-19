@@ -4,6 +4,7 @@ import { ProjectData } from '../models/project-data';
 import { Project } from '../models/project';
 import { Injectable } from '@nestjs/common';
 import { ProjectNotFoundException } from '../errors/project-not-found.exception';
+import { FilterParams } from '../types/filter-params';
 
 @Injectable()
 export class ProjectService {
@@ -32,6 +33,10 @@ export class ProjectService {
     project.rawData = rawData;
     project.data = this.process(rawData);
     return this.projectRepository.update(project);
+  }
+
+  getAllByFilter(params: FilterParams): Promise<Project[]> {
+    return this.projectRepository.findAllByFilter(params);
   }
 
   private process({ target, inputs }: ProjectRawData): ProjectData {

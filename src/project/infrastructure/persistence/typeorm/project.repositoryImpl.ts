@@ -1,5 +1,5 @@
 import {
-  ProjectRepository
+  ProjectRepository,
 } from '../../../domain/ports/project.repository.port';
 import { ProjectRawData } from '../../../domain/models/project-raw-data';
 import { Project } from '../../../domain/models/project';
@@ -8,13 +8,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProjectData } from '../../../domain/models/project-data';
+import { FilterParams } from '../../../domain/types/filter-params';
 
 @Injectable()
 export class ProjectRepositoryImpl implements ProjectRepository {
   constructor(
     @InjectRepository(ProjectTypeOrmEntity)
     private readonly projectRepository: Repository<ProjectTypeOrmEntity>,
-  ) {}
+  ) {
+  }
 
   async create(project: Project): Promise<Project> {
     const ormEntity = new ProjectTypeOrmEntity();
@@ -40,6 +42,41 @@ export class ProjectRepositoryImpl implements ProjectRepository {
       return null;
     }
     return this.fromEntity(ormEntity);
+  }
+
+  async findAllByFilter({
+    page,
+    limit,
+    name,
+    endDate,
+    startDate
+  }: FilterParams): Promise<Project[]> {
+    const skip = page * limit;
+
+    const query = this.projectRepository.createQueryBuilder('project');
+    if (name) {
+      query.andWhere('LOWER(project.name) LIKE :name', {
+        name: `%${name.toLowerCase()}%`,
+      });
+    }
+
+    if (startDate) {
+      query.andWhere('project.created_at >= :startDate', { startDate });
+    }
+
+    if (endDate) {
+      query.andWhere('project.created_at <= :endDate', { endDate });
+    }
+
+    const result = await query
+      .orderBy('project.created_at', 'DESC')
+      .skip(skip)
+      .take(limit)
+      .getMany();
+
+    return result.map(
+      (ormProject: ProjectTypeOrmEntity) => this.fromEntity(ormProject)
+    );
   }
 
   private fromEntity(ormProject: ProjectTypeOrmEntity): Project {

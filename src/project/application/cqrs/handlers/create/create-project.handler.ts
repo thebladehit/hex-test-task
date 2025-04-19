@@ -1,7 +1,7 @@
-import { CreateProjectCommand } from '../commands/create/create-project.command';
+import { CreateProjectCommand } from '../../commands/create/create-project.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { ProjectService } from '../../../domain/services/project.service';
-import { Project } from '../../../domain/models/project';
+import { ProjectService } from '../../../../domain/services/project.service';
+import { Project } from '../../../../domain/models/project';
 
 @CommandHandler(CreateProjectCommand)
 export class CreateProjectHandler implements ICommandHandler<CreateProjectCommand> {

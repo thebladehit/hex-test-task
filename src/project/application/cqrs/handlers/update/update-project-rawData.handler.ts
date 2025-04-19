@@ -1,9 +1,9 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { UpdateProjectRawDataCommand } from '../commands/update/update-project-rawData.command';
-import { Project } from '../../../domain/models/project';
-import { ProjectNotFoundException } from '../../../domain/errors/project-not-found.exception';
+import { UpdateProjectRawDataCommand } from '../../commands/update/update-project-rawData.command';
+import { Project } from '../../../../domain/models/project';
+import { ProjectNotFoundException } from '../../../../domain/errors/project-not-found.exception';
 import { NotFoundException } from '@nestjs/common';
-import { ProjectService } from '../../../domain/services/project.service';
+import { ProjectService } from '../../../../domain/services/project.service';
 
 @CommandHandler(UpdateProjectRawDataCommand)
 export class UpdateProjectRawDataHandler implements ICommandHandler<UpdateProjectRawDataCommand> {

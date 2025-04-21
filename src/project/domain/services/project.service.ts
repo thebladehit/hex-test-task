@@ -41,14 +41,55 @@ export class ProjectService {
 
   private process({ target, inputs }: ProjectRawData): ProjectData {
     const result = this.findSumSubnet(target, inputs);
-    if (result) {
+    if (result.length !== 0) {
       return new ProjectData('done', result);
     }
     return new ProjectData('invalid-input');
   }
 
   private findSumSubnet(target: number, inputs: number[]): number[] {
-    // do some logic
-    return inputs;
+    let res: number[] = [];
+
+    for (let i = 0; i < inputs.length; i++) {
+      if (inputs[i] === target) {
+        res.push(inputs[i]);
+        break;
+      }
+
+      let sum = inputs[i];
+      res.push(inputs[i]);
+
+      const lastIdxs: number[] = [];
+      let nextIdx = i + 1;
+
+      while (inputs[nextIdx]) {
+        if (sum + inputs[nextIdx] === target) {
+          return [...res, inputs[nextIdx]];
+        }
+
+        if (sum + inputs[nextIdx] < target) {
+          sum += inputs[nextIdx];
+          res.push(inputs[nextIdx]);
+          lastIdxs.push(nextIdx);
+        }
+
+        nextIdx++;
+
+        if (!inputs[nextIdx]) {
+          do {
+            const lastIdx = lastIdxs.pop();
+            if (lastIdx === undefined) {
+              break;
+            }
+            sum -= inputs[lastIdx];
+            res.pop();
+            nextIdx = lastIdx + 1;
+          } while (!inputs[nextIdx])
+        }
+      }
+
+      res = [];
+    }
+    return res;
   }
 }
